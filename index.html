@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+<!-- Pustaka 3D Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080808">
+  <meta name="description" content="Profil Ali Sulthan, pelajar yang tertarik pada pengembangan aplikasi dan ilmu pengetahuan.">
+
+  <title>Ali Sulthan — Personal Profile & Games</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <div class="page-noise" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a href="#home" class="brand" aria-label="Ali Sulthan, beranda">
+      AS<span class="brand-dot">.</span>
+    </a>
+
+    <span class="topbar-label">PERSONAL PROFILE / 2026</span>
+
+    <nav class="nav-menu">
+      <a href="#about" class="nav-link">ABOUT <span aria-hidden="true">↘</span></a>
+      <a href="#projects" class="nav-link">PROJECTS <span aria-hidden="true">↘</span></a>
+      <a href="#games" class="nav-link">GAMES <span aria-hidden="true">↘</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero section-wrap" id="home">
+      <div class="hero-meta reveal">
+        <span class="status-dot"></span>
+        <span>STUDENT · INDONESIA</span>
+      </div>
+
+      <div class="profile-visual reveal" aria-label="Foto profil Ali Sulthan">
+        <div class="sharingan-ring" aria-hidden="true">
+          <span class="tomoe tomoe-one"></span>
+          <span class="tomoe tomoe-two"></span>
+          <span class="tomoe tomoe-three"></span>
+        </div>
+
+        <div class="profile-photo-frame">
+          <img
+            src="assets/p.png"
+            alt="Foto profil Ali Sulthan"
+            class="profile-photo"
+            width="400"
+            height="400"
+            fetchpriority="high"
+          >
+        </div>
+
+        <span class="photo-index">AS / 01</span>
+      </div>
+
+      <p class="eyebrow reveal">A LITTLE INTRODUCTION</p>
+
+      <h1 class="hero-title reveal">
+        ALI
+        <span class="title-second">SULTHAN<span class="title-period">.</span></span>
+      </h1>
+
+      <div class="hero-bottom reveal">
+        <p class="hero-description">
+          Pelajar yang tertarik pada teknologi,
+          senang membaca, dan selalu ingin tahu
+          bagaimana dunia bekerja.
+        </p>
+
+        <a href="#about" class="scroll-link">
+          SCROLL TO EXPLORE
+          <span class="scroll-arrow" aria-hidden="true">↓</span>
+        </a>
+      </div>
+
+      <div class="hero-index" aria-hidden="true">01 / INTRODUCTION</div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about section-wrap" id="about">
+      <div class="section-heading reveal">
+        <span class="section-number">01</span>
+        <h2>THE PERSON<br>BEHIND THE NAME.</h2>
+      </div>
+
+      <div class="about-content reveal">
+        <p class="large-copy">
+          Masih belajar. Masih bertumbuh.
+          <span class="muted-copy">
+            Selalu ada sesuatu yang baru untuk dipahami.
+          </span>
+        </p>
+
+        <div class="profile-details">
+          <div class="detail-row">
+            <span class="detail-label">NAMA</span>
+            <span class="detail-value">Ali Sulthan</span>
+          </div>
+
+          <div class="detail-row detail-school">
+            <span class="detail-label">SEKOLAH</span>
+            <div class="school-value-wrap">
+              <a href="https://chandrabuana.sch.id/SMP" target="_blank" rel="noopener noreferrer" class="detail-value school-link">
+                SMP Chandra Buana <span class="link-arrow" aria-hidden="true">↗</span>
+              </a>
+              <div class="school-logo-frame">
+                <img src="assets/cb.jpeg" alt="Logo SMP Chandra Buana" class="school-logo">
+              </div>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">USIA</span>
+            <span class="detail-value">15 Tahun</span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">KELAS</span>
+            <span class="detail-value">IX / 9</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section class="about section-wrap" id="projects">
+      <div class="section-heading reveal">
+        <span class="section-number">02</span>
+        <h2>MY PROJECTS.</h2>
+      </div>
+
+      <div class="project-grid reveal">
+        <article class="project-card">
+          <div class="project-meta">
+            <span class="project-category">WEB APPLICATION</span>
+            <span class="project-status">COMPLETED</span>
+          </div>
+          <h3 class="project-title">Study Tracker</h3>
+          <p class="project-desc">
+            Aplikasi manajemen waktu belajar dan pencatat materi harian berbasis web dengan antarmuka yang bersih dan bebas gangguan.
+          </p>
+          <div class="project-tags">
+            <span>HTML / CSS</span>
+            <span>JavaScript</span>
+            <span>Local Storage</span>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-meta">
+            <span class="project-category">UTILITY TOOL</span>
+            <span class="project-status">CONCEPT</span>
+          </div>
+          <h3 class="project-title">Formula Reader</h3>
+          <p class="project-desc">
+            Alat kalkulasi dan referensi cepat rumus sains/matematika sederhana untuk membantu proses belajar antar siswa.
+          </p>
+          <div class="project-tags">
+            <span>Front-End</span>
+            <span>MathJax</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- GAMES SECTION -->
+    <section class="about section-wrap" id="games">
+      <div class="section-heading reveal">
+        <span class="section-number">03</span>
+        <h2>PLAYABLE GAMES.</h2>
+      </div>
+
+      <!-- GAME 1: GRID SHIFT -->
+      <div class="game-container reveal" id="gridShiftContainer">
+        <div class="game-header">
+          <div>
+            <span class="detail-label">PUZZLE / MINIMALIST (100 LEVELS)</span>
+            <h3 class="game-title">Grid Shift</h3>
+          </div>
+          <div class="game-controls-info">
+            <span>Gunakan Arrow Keys (Atas, Bawah, Kiri, Kanan) untuk menggerakkan [P] ke Goal [G]. Hindari Duri [▲] & Peluru Tembakan [•].</span>
+          </div>
+        </div>
+
+        <div class="canvas-wrap">
+          <canvas id="gridShiftCanvas" width="360" height="360"></canvas>
+        </div>
+
+        <div class="game-status-bar">
+          <span id="gridLevel">LEVEL: 1 / 100</span>
+          <span id="gridMoves">MOVES: 0</span>
+          <div class="game-btn-group">
+            <button id="resetGridBtn" class="game-btn">RESTART</button>
+            <a href="#home" class="game-btn">KEMBALI KE PROFIL</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- GAME 2: SHADOW REALM -->
+      <div class="game-container reveal" id="shadowRealmContainer" style="margin-top: 50px;">
+        <div class="game-header">
+          <div>
+            <span class="detail-label">2D ACTION / PLATFORMER (100 LEVELS)</span>
+            <h3 class="game-title">Shadow Realm</h3>
+          </div>
+          <div class="game-controls-info">
+            <span>[A / D / Panah] Jalan | [W / Space] Lompat | [J / Z / Klik Kiri] Tebas Pedang</span>
+          </div>
+        </div>
+
+        <div class="canvas-wrap">
+          <canvas id="shadowRealmCanvas" width="600" height="350"></canvas>
+        </div>
+
+        <div class="game-status-bar">
+          <span id="shadowLevel">LEVEL: 1 / 100</span>
+          <span id="shadowHP">HP: 100 / 100</span>
+          <span id="shadowEnemies">MUSUH SISA: 10</span>
+          <div class="game-btn-group">
+            <button id="resetShadowBtn" class="game-btn">RESTART</button>
+            <a href="#home" class="game-btn">KEMBALI KE PROFIL</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MANIFESTO SECTION -->
+    <section class="manifesto section-wrap">
+      <span class="section-number reveal">04 / MY MINDSET</span>
+
+      <blockquote class="manifesto-text reveal">
+        “Stay curious.<br>
+        <span>Keep building.</span><br>
+        Never stop learning.”
+      </blockquote>
+
+      <p class="manifesto-caption reveal">
+        PENGETAHUAN DIMULAI DARI RASA INGIN TAHU.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer section-wrap">
+    <a href="#home" class="brand footer-brand" aria-label="Kembali ke beranda">
+      AS<span class="brand-dot">.</span>
+    </a>
+
+    <p class="footer-message">
+      Made with curiosity, by Ali Sulthan.
+    </p>
+
+    <a href="#home" class="back-top">
+      BACK TO TOP ↑
+    </a>
+
+    <div class="footer-socials">
+      <span class="social-heading">FIND ME ELSEWHERE</span>
+
+      <a href="https://wa.me/628892189442" target="_blank" rel="noopener noreferrer" class="social-link">
+        <span>WhatsApp</span>
+        <span class="social-arrow" aria-hidden="true">↗</span>
+      </a>
+
+      <a href="https://www.tiktok.com/@s4nd_st0rm0887?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer" class="social-link">
+        <span>TikTok</span>
+        <span class="social-arrow" aria-hidden="true">↗</span>
+      </a>
+
+      <a href="https://www.instagram.com/alisulthan12?rpxt=eWxwbzA3bXdzaWQw" target="_blank" rel="noopener noreferrer" class="social-link">
+        <span>Instagram</span>
+        <span class="social-arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
+
+    <span class="footer-line"></span>
+
+    <span class="copyright">
+      © 2026 · PERSONAL PROFILE
+    </span>
+  </footer>
+</body>
+</html>

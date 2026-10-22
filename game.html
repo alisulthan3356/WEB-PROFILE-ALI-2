@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080808">
+  <meta name="description" content="Detail proyek game Shadow Realm dan Grid Shift karya Ali Sulthan.">
+
+  <title>Game Projects — Ali Sulthan</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <div class="page-noise" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a href="index.html" class="brand" aria-label="Ali Sulthan, beranda">
+      AS<span class="brand-dot">.</span>
+    </a>
+
+    <span class="topbar-label">GAME DOCUMENTATION / 2026</span>
+
+    <a href="project.html" class="nav-link">
+      BACK TO PROJECTS <span aria-hidden="true">↖</span>
+    </a>
+  </header>
+
+  <main class="section-wrap game-page">
+    <section class="project-hero reveal">
+      <p class="eyebrow">GAME DEVELOPMENT & ARCHITECTURE</p>
+      <h1 class="hero-title">
+        GAME<br>
+        <span class="title-second">PROJECTS<span class="title-period">.</span></span>
+      </h1>
+    </section>
+
+    <!-- GAME 1: SHADOW REALM -->
+    <article class="game-detail-card reveal" id="shadow-realm">
+      <div class="game-header">
+        <div class="project-meta">
+          <span class="project-category">2D ACTION / PLATFORMER</span>
+          <span class="project-status">IN DEVELOPMENT</span>
+        </div>
+        <h2 class="game-title">Shadow Realm</h2>
+      </div>
+
+      <p class="game-overview">
+        Game platformer aksi 2D bertema gelap dengan mekanik aksi cepat, eksplorasi dungeon, dan pertarungan boss yang menantang.
+      </p>
+
+      <div class="game-specs">
+        <div class="spec-group">
+          <span class="spec-label">CORE MECHANICS</span>
+          <ul class="spec-list">
+            <li>Movement: Dash, Wall-slide, & Double-jump presisi.</li>
+            <li>Combat: Fast-paced melee combo & parry timing.</li>
+            <li>Level Design: Dungeon non-linear dengan area rahasia.</li>
+          </ul>
+        </div>
+
+        <div class="spec-group">
+          <span class="spec-label">TECH STACK</span>
+          <div class="project-tags">
+            <span>Godot Engine 4</span>
+            <span>GDScript</span>
+            <span>Pixel Art (Aseprite)</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- GAME 2: GRID SHIFT -->
+    <article class="game-detail-card reveal" id="grid-shift">
+      <div class="game-header">
+        <div class="project-meta">
+          <span class="project-category">PUZZLE / MINIMALIST</span>
+          <span class="project-status">PROTOTYPE</span>
+        </div>
+        <h2 class="game-title">Grid Shift</h2>
+      </div>
+
+      <p class="game-overview">
+        Game teka-teki logika berbasis petak tempat pemain memanipulasi ruang dan gravitasi untuk menyelesaikan setiap level.
+      </p>
+
+      <div class="game-specs">
+        <div class="spec-group">
+          <span class="spec-label">CORE MECHANICS</span>
+          <ul class="spec-list">
+            <li>Spatial Logic: Pergeseran matriks petak (Grid Matrix Shift).</li>
+            <li>Gravity Flip: Rotasi gravitasi 90° & 180°.</li>
+            <li>Constraints: Jumlah langkah terbatas di setiap stage.</li>
+          </ul>
+        </div>
+
+        <div class="spec-group">
+          <span class="spec-label">TECH STACK</span>
+          <div class="project-tags">
+            <span>HTML5 Canvas</span>
+            <span>Vanilla JavaScript</span>
+            <span>CSS Grid / Flexbox</span>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer section-wrap">
+    <a href="index.html" class="brand footer-brand" aria-label="Kembali ke beranda">
+      AS<span class="brand-dot">.</span>
+    </a>
+
+    <p class="footer-message">
+      Made with curiosity, by Ali Sulthan.
+    </p>
+
+    <a href="project.html" class="back-top">
+      BACK TO PROJECTS ↑
+    </a>
+
+    <span class="footer-line"></span>
+
+    <span class="copyright">
+      © 2026 · PERSONAL PROFILE
+    </span>
+  </footer>
+</body>
+</html>
