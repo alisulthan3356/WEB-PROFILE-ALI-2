@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ========================================
-  // 2. GRID SHIFT GAME ENGINE (7x7 ENHANCED)
+  // 2. GRID SHIFT GAME ENGINE (FIXED PATH & RANDOM GOAL)
   // ========================================
   const gridCanvas = document.getElementById("gridShiftCanvas");
   if (gridCanvas) {
@@ -31,8 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const movesDisplay = document.getElementById("gridMoves");
     const resetBtn = document.getElementById("resetGridBtn");
 
-    // Ukuran Peta Diperluas menjadi 7x7
-    const gridSize = 7;
+    const gridSize = 6;
     const cellSize = gridCanvas.width / gridSize;
 
     let currentLevel = 1;
@@ -41,67 +40,23 @@ document.addEventListener("DOMContentLoaded", () => {
     let levelData = {};
     let projectiles = [];
     let gameInterval = null;
-    let gameStarted = false;
 
-    // Load progress terakhir dari localStorage jika ada
-    let savedLevel = parseInt(localStorage.getItem("gridShiftSavedLevel")) || 1;
-
-    // Buat Overlay Menu Awal
-    const canvasWrap = gridCanvas.parentElement;
-    canvasWrap.style.position = "relative";
-
-    const menuOverlay = document.createElement("div");
-    menuOverlay.id = "gridMenuOverlay";
-    menuOverlay.style.cssText = `
-      position: absolute;
-      inset: 0;
-      background: rgba(8, 8, 8, 0.92);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-      z-index: 10;
-    `;
-
-    menuOverlay.innerHTML = `
-      <h3 style="color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 20px; letter-spacing: -0.5px; margin-bottom: 10px;">GRID SHIFT</h3>
-      <button id="startNewGameBtn" class="game-btn" style="width: 180px; padding: 10px;">MULAI BARU</button>
-      <button id="continueGameBtn" class="game-btn" style="width: 180px; padding: 10px; ${savedLevel <= 1 ? 'opacity: 0.5; cursor: not-allowed;' : ''}">LANJUTKAN (${savedLevel})</button>
-    `;
-    canvasWrap.appendChild(menuOverlay);
-
-    document.getElementById("startNewGameBtn").addEventListener("click", () => {
-      currentLevel = 1;
-      startGame();
-    });
-
-    document.getElementById("continueGameBtn").addEventListener("click", () => {
-      currentLevel = savedLevel;
-      startGame();
-    });
-
-    function startGame() {
-      menuOverlay.style.display = "none";
-      gameStarted = true;
-      initGridLevel(currentLevel);
-      if (gameInterval) clearInterval(gameInterval);
-      gameInterval = setInterval(updateGridLoop, 1000 / 30);
-    }
-
-    // Pathfinding BFS untuk menjamin jalur kemenangan selalu ada
+    // Memeriksa apakah ada jalur bebas dari 'start' ke 'goal' (BFS Pathfinding)
     function isPathClear(start, goal, obstacles, size) {
       let visited = Array.from({ length: size }, () => Array(size).fill(false));
       let queue = [{ x: start.x, y: start.y }];
       visited[start.y][start.x] = true;
 
       const directions = [
-        { x: 0, y: -1 }, { x: 0, y: 1 },
-        { x: -1, y: 0 }, { x: 1, y: 0 }
+        { x: 0, y: -1 }, // Atas
+        { x: 0, y: 1 },  // Bawah
+        { x: -1, y: 0 }, // Kiri
+        { x: 1, y: 0 }   // Kanan
       ];
 
       while (queue.length > 0) {
         let curr = queue.shift();
+
         if (curr.x === goal.x && curr.y === goal.y) return true;
 
         for (let d of directions) {
@@ -119,7 +74,8 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
       }
-      return false;
+
+      return false; // Jalur terhalang total
     }
 
     function generateGridLevel(lvl) {
@@ -127,14 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let validLayout = false;
       let attempts = 0;
 
-      const possibleDirs = [
-        { x: 0, y: -1 }, // Atas
-        { x: 0, y: 1 },  // Bawah
-        { x: -1, y: 0 }, // Kiri
-        { x: 1, y: 0 }   // Kanan
-      ];
-
-      while (!validLayout && attempts < 150) {
+      while (!validLayout && attempts < 100) {
         attempts++;
         obs = [];
         spikes = [];
@@ -146,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
           y: Math.floor(Math.random() * gridSize)
         };
 
-        // 2. Posisi Goal Acak
+        // 2. Posisi Goal Acak (memastikan tidak sama dengan Player)
         do {
           g = {
             x: Math.floor(Math.random() * gridSize),
@@ -154,12 +103,11 @@ document.addEventListener("DOMContentLoaded", () => {
           };
         } while (g.x === p.x && g.y === p.y);
 
-        // Skalasi Kesulitan: Blok dikurangi agar tidak memblokir
-        let numObstacles = lvl <= 50 ? Math.min(1 + Math.floor(lvl / 15), 3) : Math.min(3 + Math.floor((lvl - 50) / 15), 5);
-        let numSpikes = lvl <= 50 ? Math.min(Math.floor(lvl / 8), 4) : Math.min(4 + Math.floor((lvl - 50) / 6), 8);
-        let numTurrets = lvl <= 50 ? Math.min(Math.floor(lvl / 12), 2) : Math.min(2 + Math.floor((lvl - 50) / 10), 5);
+        let numObstacles = Math.min(2 + Math.floor(lvl / 12), 7);
+        let numSpikes = Math.min(Math.floor(lvl / 4), 8);
+        let numTurrets = Math.min(Math.floor(lvl / 6), 3);
 
-        // 3. Generate Blok (Obstacles)
+        // 3. Generate Obstacles
         for (let i = 0; i < numObstacles; i++) {
           let ox = Math.floor(Math.random() * gridSize);
           let oy = Math.floor(Math.random() * gridSize);
@@ -170,11 +118,11 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
 
-        // 4. Cek Jalur Terbuka
+        // 4. Validasi Jalur Kemenangan
         validLayout = isPathClear(p, g, obs, gridSize);
 
         if (validLayout) {
-          // 5. Generate Duri (Spikes)
+          // 5. Generate Spikes & Turrets setelah jalur utama terbukti aman
           for (let i = 0; i < numSpikes; i++) {
             let sx = Math.floor(Math.random() * gridSize);
             let sy = Math.floor(Math.random() * gridSize);
@@ -188,7 +136,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
           }
 
-          // 6. Generate Meriam (Turrets)
           for (let i = 0; i < numTurrets; i++) {
             let tx = Math.floor(Math.random() * gridSize);
             let ty = Math.floor(Math.random() * gridSize);
@@ -196,20 +143,10 @@ document.addEventListener("DOMContentLoaded", () => {
               (tx !== p.x || ty !== p.y) &&
               (tx !== g.x || ty !== g.y) &&
               !obs.some(o => o.x === tx && o.y === ty) &&
-              !spikes.some(s => s.x === tx && s.y === ty) &&
+              !spikes.some(s => s.x === sx && s.y === sy) &&
               !turrets.some(t => t.x === tx && t.y === ty)
             ) {
-              let isHoming = lvl >= 90 && i === 0; // Meriam pelacak untuk Level 90+
-              let dir = possibleDirs[Math.floor(Math.random() * possibleDirs.length)];
-
-              turrets.push({
-                x: tx,
-                y: ty,
-                cooldown: 0,
-                interval: Math.max(55 - Math.floor(lvl / 2), 20),
-                dir: dir,
-                isHoming: isHoming
-              });
+              turrets.push({ x: tx, y: ty, cooldown: 0, interval: Math.max(60 - lvl, 25) });
             }
           }
         }
@@ -223,7 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
       player = { ...levelData.player };
       moves = 0;
       projectiles = [];
-      localStorage.setItem("gridShiftSavedLevel", lvl);
       updateGridUI();
       drawGrid();
     }
@@ -236,7 +172,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function drawGrid() {
       ctx.clearRect(0, 0, gridCanvas.width, gridCanvas.height);
 
-      // Garis Grid
       ctx.strokeStyle = "#252525";
       ctx.lineWidth = 1;
       for (let i = 0; i <= gridSize; i++) {
@@ -251,64 +186,36 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.stroke();
       }
 
-      // 1. Gambar Blok Penghalang
       ctx.fillStyle = "#333333";
       levelData.obstacles.forEach((o) => {
         ctx.fillRect(o.x * cellSize + 2, o.y * cellSize + 2, cellSize - 4, cellSize - 4);
       });
 
-      // 2. Gambar Duri
       ctx.fillStyle = "#a52c2c";
       levelData.spikes.forEach((s) => {
         ctx.beginPath();
-        ctx.moveTo(s.x * cellSize + cellSize / 2, s.y * cellSize + 6);
-        ctx.lineTo(s.x * cellSize + 6, s.y * cellSize + cellSize - 6);
-        ctx.lineTo(s.x * cellSize + cellSize - 6, s.y * cellSize + cellSize - 6);
+        ctx.moveTo(s.x * cellSize + cellSize / 2, s.y * cellSize + 8);
+        ctx.lineTo(s.x * cellSize + 8, s.y * cellSize + cellSize - 8);
+        ctx.lineTo(s.x * cellSize + cellSize - 8, s.y * cellSize + cellSize - 8);
         ctx.closePath();
         ctx.fill();
       });
 
-      // 3. Gambar Meriam 2D
+      ctx.fillStyle = "#777777";
       levelData.turrets.forEach((t) => {
-        let cx = t.x * cellSize + cellSize / 2;
-        let cy = t.y * cellSize + cellSize / 2;
-
-        // Badan Meriam
-        ctx.fillStyle = t.isHoming ? "#a52c2c" : "#666666";
-        ctx.beginPath();
-        ctx.arc(cx, cy, cellSize / 3, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Moncong Meriam
-        let targetDir = t.dir;
-        if (t.isHoming) {
-          let dx = player.x - t.x;
-          let dy = player.y - t.y;
-          let len = Math.hypot(dx, dy) || 1;
-          targetDir = { x: dx / len, y: dy / len };
-        }
-
-        ctx.strokeStyle = t.isHoming ? "#ff4d4d" : "#aaaaaa";
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        ctx.moveTo(cx, cy);
-        ctx.lineTo(cx + targetDir.x * (cellSize / 2 - 2), cy + targetDir.y * (cellSize / 2 - 2));
-        ctx.stroke();
+        ctx.fillRect(t.x * cellSize + 10, t.y * cellSize + 10, cellSize - 20, cellSize - 20);
       });
 
-      // 4. Gambar Goal
       ctx.fillStyle = "#ffffff";
-      ctx.fillRect(levelData.goal.x * cellSize + 8, levelData.goal.y * cellSize + 8, cellSize - 16, cellSize - 16);
+      ctx.fillRect(levelData.goal.x * cellSize + 10, levelData.goal.y * cellSize + 10, cellSize - 20, cellSize - 20);
 
-      // 5. Gambar Peluru
+      ctx.fillStyle = "#ffffff";
       projectiles.forEach((pr) => {
-        ctx.fillStyle = pr.isHoming ? "#ff4d4d" : "#ffffff";
         ctx.beginPath();
         ctx.arc(pr.x, pr.y, 4, 0, Math.PI * 2);
         ctx.fill();
       });
 
-      // 6. Gambar Player
       ctx.fillStyle = "#f2f0eb";
       ctx.beginPath();
       ctx.arc(player.x * cellSize + cellSize / 2, player.y * cellSize + cellSize / 2, cellSize / 3.5, 0, Math.PI * 2);
@@ -316,41 +223,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateGridLoop() {
-      if (!gameStarted) return;
-
-      // Update Cooldown & Menembak
       levelData.turrets.forEach((t) => {
         t.cooldown++;
         if (t.cooldown >= t.interval) {
           t.cooldown = 0;
-          let cx = t.x * cellSize + cellSize / 2;
-          let cy = t.y * cellSize + cellSize / 2;
-
-          let vx = t.dir.x * 4;
-          let vy = t.dir.y * 4;
-
-          // Jika Meriam Pelacak (Level 90+)
-          if (t.isHoming) {
-            let px = player.x * cellSize + cellSize / 2;
-            let py = player.y * cellSize + cellSize / 2;
-            let dx = px - cx;
-            let dy = py - cy;
-            let dist = Math.hypot(dx, dy) || 1;
-            vx = (dx / dist) * 4.5;
-            vy = (dy / dist) * 4.5;
-          }
-
           projectiles.push({
-            x: cx,
-            y: cy,
-            vx: vx,
-            vy: vy,
-            isHoming: t.isHoming
+            x: t.x * cellSize + cellSize / 2,
+            y: t.y * cellSize + cellSize / 2,
+            vx: 3.5,
+            vy: 0
           });
         }
       });
 
-      // Pergerakan Peluru
       for (let i = projectiles.length - 1; i >= 0; i--) {
         let pr = projectiles[i];
         pr.x += pr.vx;
@@ -365,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        if (pr.x > gridCanvas.width || pr.x < 0 || pr.y > gridCanvas.height || pr.y < 0) {
+        if (pr.x > gridCanvas.width || pr.x < 0) {
           projectiles.splice(i, 1);
         }
       }
@@ -380,8 +265,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function moveGridPlayer(dx, dy) {
-      if (!gameStarted) return;
-
       let nx = player.x + dx;
       let ny = player.y + dy;
 
@@ -423,11 +306,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.key === "ArrowRight") moveGridPlayer(1, 0);
     });
 
-    resetBtn.addEventListener("click", () => {
-      if (gameStarted) initGridLevel(currentLevel);
-    });
+    resetBtn.addEventListener("click", () => initGridLevel(currentLevel));
 
-    drawGrid();
+    initGridLevel(currentLevel);
+    if (gameInterval) clearInterval(gameInterval);
+    gameInterval = setInterval(updateGridLoop, 1000 / 30);
   }
 
   // ========================================
